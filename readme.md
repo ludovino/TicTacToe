@@ -1,7 +1,7 @@
 # Noughts and Crosses
-##Fish in a Bottle Brief
+## Fish in a Bottle Brief
 
-####Part 1
+#### Part 1
 Single player mode
 Two player mode
 Winner screen
@@ -9,7 +9,7 @@ Alternate which player starts first in every subsequent game
 Keep a tally of the scores
 Title screen
 
-####Part 2
+#### Part 2
 alternate game mode
 
 TODO List:
@@ -20,3 +20,6 @@ TODO List:
 - [ ] win detection
 - [ ] basic 2-player implementation
 - [ ] cpu player (min max alogrithm?)
+
+# Screen Sketch
+![first pass doodle for the game screens](https://github.com/ludovino/TicTacToe/blob/master/UI-sketch.png?raw=true)
