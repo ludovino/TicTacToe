@@ -18,10 +18,13 @@ TODO List:
 - [X] screen sketch
 - [X] git repo
 - [X] system design first pass
-- [ ] gameplay UI bones
-- [ ] win detection
-- [ ] basic 2-player implementation
+- [X] gameplay UI bones
+- [X] win detection
+- [X] basic 2-player implementation
+- [ ] win screen
 - [ ] cpu player (min max alogrithm?)
+- [ ] restart (alternating)
+- [ ] title screen
 
 # Screen Sketch
 ![first pass doodle for the game screens](https://github.com/ludovino/TicTacToe/blob/master/UI-sketch.png?raw=true)
@@ -29,19 +32,19 @@ TODO List:
 # System Design
 
 ## Game Controller
-Alternate between player turns
-trigger Win / Lose / Draw
+- Alternate between player turns
+- trigger Win / Lose / Draw
 
 ## Player Controller
-Recieve input from UI
-Translate input into marking board
+- Recieve input from UI
+- Translate input into marking board
 
 ## CPU Player Controller
-Read board
-Evaluate next moves - avoid unforced 1 turn losses, always play 1 turn wins
-Play move based on evaluation
+- Read board
+- Evaluate next moves - avoid unforced 1 turn losses, always play 1 turn wins
+- Play move based on evaluation
 
 ## Board
-hold play state
-prevent invalid moves
-raise event on play to change turn or win / lose / draw
+- hold play state
+- prevent invalid moves
+- raise event on play to change turn or win / lose / draw
