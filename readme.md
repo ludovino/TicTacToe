@@ -2,15 +2,15 @@
 ## Fish in a Bottle Brief
 
 #### Part 1
-Single player mode
-Two player mode
-Winner screen
-Alternate which player starts first in every subsequent game
-Keep a tally of the scores
-Title screen
+- Single player mode
+- Two player mode
+- Winner screen
+- Alternate which player starts first in every subsequent game
+- Keep a tally of the scores
+- Title screen
 
 #### Part 2
-alternate game mode
+- alternate game mode
 
 TODO List:
 - [X] screen sketch
