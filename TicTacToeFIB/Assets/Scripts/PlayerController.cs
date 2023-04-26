@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         foreach (var button in _clickableSquares)
         {
             button.enabled = false;
-            button.onClick.RemoveAllListeners();
+            button?.onClick.RemoveAllListeners();
         }
         _onDisable.Invoke();
     }
