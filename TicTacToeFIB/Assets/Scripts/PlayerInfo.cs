@@ -22,9 +22,14 @@ public class PlayerInfo : ScriptableObject
 
     public string Name { get => _name; set => _name = value; }
     public int Wins { get => _wins; }
-    public void Win() => _wins++;
+    public void AddWin() => _wins++;
     public Sprite Mark { get => _mark; }
     public int Id { get => 1 << _id; } // allow bitwise eval
     public Color Color { get => _color;  }
+
+    public void ResetWins()
+    {
+        _wins= 0;
+    }
 }
 
