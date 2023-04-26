@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private float _secondsBetweenTurns;
+    [SerializeField]
+    private float _secondsShowingLine;
 
     [SerializeField]
     private OnWin _onWin;
@@ -73,7 +75,7 @@ public class GameManager : MonoBehaviour
 
         if (!result.GameFinished) Continue();
         else if (result.IsDraw) Draw();
-        else Win(result);
+        else StartCoroutine(Win(result));
     }
 
     private void Continue()
@@ -83,11 +85,12 @@ public class GameManager : MonoBehaviour
         Debug.Log($"swap players");
     }
 
-    private void Win(EvaluationResult result)
+    private IEnumerator Win(EvaluationResult result)
     {
         var winner = GetPlayer(result.WinnerId);
-        winner.AddWin();
         _resultLine.DrawLine(result.Line);
+        yield return new WaitForSeconds(_secondsShowingLine);
+        winner.AddWin();
         _onWin.Invoke(winner);
     }
 

@@ -13,7 +13,6 @@ public class ResultScreen : MonoBehaviour
     public void Win(PlayerInfo winner)
     {
         _text.text = $"{winner.Name} Wins!";
-        _canvas.alpha = 1;
         _canvas.interactable = true;
         _canvas.blocksRaycasts = true;
     }
@@ -21,14 +20,12 @@ public class ResultScreen : MonoBehaviour
     public void Draw()
     {
         _text.text = $"It's a Draw!";
-        _canvas.alpha = 1;
         _canvas.interactable = true;
         _canvas.blocksRaycasts = true;
     }
 
     public void Continue()
     {
-        _canvas.alpha = 0;
         _canvas.interactable = false;
         _canvas.blocksRaycasts = false;
     }
