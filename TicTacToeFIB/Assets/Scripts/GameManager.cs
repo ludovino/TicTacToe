@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     private OnWin _onWin;
     [SerializeField]
     private UnityEvent _onDraw;
+    [SerializeField]
+    private ResultLine _resultLine;
+
     private BoardEvaluator _boardEvaluator;
     private void Awake()
     {
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         _board.Clear();
         SwapPlayers();
+        _resultLine.HideLine();
     }
 
     public void SwapPlayers()
@@ -60,29 +64,36 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(_secondsBetweenTurns);
         _activePlayerController.SetActive(true);
     }
+
+
     private void OnPlay()
     {
         var result = _boardEvaluator.Evaluate(_board.State);
-        
-        if (!result.GameFinished) {
-            SwapPlayers();
-            // trigger swap graphic
-            Debug.Log($"swap players");
-            return; 
-        }
-
         _activePlayerController.SetActive(false);
 
-        if (result.IsDraw)
-        {
-            _onDraw.Invoke();
-            return;
-        }
+        if (!result.GameFinished) Continue();
+        else if (result.IsDraw) Draw();
+        else Win(result);
+    }
 
+    private void Continue()
+    {
+        SwapPlayers();
+        // trigger swap graphic
+        Debug.Log($"swap players");
+    }
+
+    private void Win(EvaluationResult result)
+    {
         var winner = GetPlayer(result.WinnerId);
         winner.AddWin();
-
+        _resultLine.DrawLine(result.Line);
         _onWin.Invoke(winner);
+    }
+
+    private void Draw()
+    {
+        _onDraw.Invoke();
     }
 
     private PlayerInfo GetPlayer(int id)
