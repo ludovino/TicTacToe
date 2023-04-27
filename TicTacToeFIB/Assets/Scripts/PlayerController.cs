@@ -17,15 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Board _board;
 
-    [SerializeField]
-    private UnityEvent _onEnable;
-    [SerializeField]
-    private UnityEvent _onDisable;
-
     private void Awake()
     {
-        _onEnable ??= new UnityEvent();
-        _onDisable ??= new UnityEvent();
         _clickableSquares = _grid.GetComponentsInChildren<Button>(true);
     }
     public void OnEnable()
@@ -36,7 +29,6 @@ public class PlayerController : MonoBehaviour
             button.onClick.AddListener(() => Play(Array.IndexOf(_clickableSquares, button)));
             button.enabled = _board.State[i] == 0;
         }
-        _onEnable.Invoke();
     }
 
     public void OnDisable()
@@ -46,7 +38,6 @@ public class PlayerController : MonoBehaviour
             button.enabled = false;
             button?.onClick.RemoveAllListeners();
         }
-        _onDisable.Invoke();
     }
 
     private void Play(int index)

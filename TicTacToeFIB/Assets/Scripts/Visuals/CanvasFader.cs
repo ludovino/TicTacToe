@@ -1,10 +1,10 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class CanvasFader : MonoBehaviour
 {
     [SerializeField]
@@ -15,11 +15,12 @@ public class CanvasFader : MonoBehaviour
     private float _timeIn;
     [SerializeField]
     private float _timeOut;
+    [SerializeField]
     private CanvasGroup _canvasGroup;
     private Tween _tween;
     private void Awake()
     {
-        _canvasGroup = GetComponent<CanvasGroup>();
+        _canvasGroup ??= GetComponent<CanvasGroup>();
     }
 
     // Start is called before the first frame update
@@ -39,6 +40,11 @@ public class CanvasFader : MonoBehaviour
     {
         if (_tween != null) _tween.Kill();
         _canvasGroup.alpha = _high;
-        _tween = _canvasGroup.DOFade(_low, _timeOut);
+        _tween = _canvasGroup?.DOFade(_low, _timeOut);
+    }
+
+    private void OnDestroy()
+    {
+        if(_tween != null) _tween.Kill();
     }
 }

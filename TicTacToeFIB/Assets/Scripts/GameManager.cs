@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _inactivePlayerController;
 
+    private GameObject _startingPlayer;
+
+    private GameObject _secondPlayer;
+
     [SerializeField]
     private Board _board;
 
@@ -42,6 +46,8 @@ public class GameManager : MonoBehaviour
     {
         _boardEvaluator = new BoardEvaluator();
         _board.OnPlay.AddListener(OnPlay);
+        _startingPlayer = _activePlayerController;
+        _secondPlayer = _inactivePlayerController;
         _player1.ResetWins();
         _player2.ResetWins();
     }
@@ -49,8 +55,11 @@ public class GameManager : MonoBehaviour
     public void BeginGame()
     {
         _board.Clear();
-        SwapPlayers();
         _resultLine.HideLine();
+        SwapStart();
+        _activePlayerController = _startingPlayer;
+        _inactivePlayerController = _secondPlayer;
+        ActivatePlayer();
     }
 
     public void SwapPlayers()
@@ -59,9 +68,21 @@ public class GameManager : MonoBehaviour
         _activePlayerController = _inactivePlayerController;
         _inactivePlayerController = swap;
         _inactivePlayerController.SetActive(false);
-        StartCoroutine(SwapPlayersCoroutine());
     }
-    public IEnumerator SwapPlayersCoroutine()
+
+    public void SwapStart()
+    {
+        var swap = _startingPlayer;
+        _startingPlayer = _secondPlayer;
+        _secondPlayer = swap;
+    }
+
+    public void ActivatePlayer()
+    {
+        _activePlayerController.SetActive(true);
+    }
+
+    public IEnumerator ActivatePlayerCR()
     {
         yield return new WaitForSeconds(_secondsBetweenTurns);
         _activePlayerController.SetActive(true);
@@ -74,15 +95,14 @@ public class GameManager : MonoBehaviour
         _activePlayerController.SetActive(false);
 
         if (!result.GameFinished) Continue();
-        else if (result.IsDraw) Draw();
+        else if (result.IsDraw) StartCoroutine(Draw());
         else StartCoroutine(Win(result));
     }
 
     private void Continue()
     {
         SwapPlayers();
-        // trigger swap graphic
-        Debug.Log($"swap players");
+        StartCoroutine(ActivatePlayerCR());
     }
 
     private IEnumerator Win(EvaluationResult result)
@@ -94,8 +114,9 @@ public class GameManager : MonoBehaviour
         _onWin.Invoke(winner);
     }
 
-    private void Draw()
+    private IEnumerator Draw()
     {
+        yield return new WaitForSeconds(_secondsShowingLine);
         _onDraw.Invoke();
     }
 

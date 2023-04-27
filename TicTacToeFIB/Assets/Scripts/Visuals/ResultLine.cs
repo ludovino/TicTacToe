@@ -48,4 +48,9 @@ public class ResultLine : MonoBehaviour
     {
         line.enabled = false;
     }
+
+    public void OnDestroy()
+    {
+        if (tween != null) tween.Kill();
+    }
 }
