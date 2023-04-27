@@ -21,10 +21,12 @@ TODO List:
 - [X] gameplay UI bones
 - [X] win detection
 - [X] basic 2-player implementation
-- [ ] win screen
-- [ ] cpu player (min max alogrithm?)
-- [ ] restart (alternating)
-- [ ] title screen
+- [X] win screen
+- [X] cpu player (min max alogrithm?)
+- [X] restart (alternating)
+- [X] title screen
+- [ ] plan alternate game mode
+- [ ] build alternate game mode
 
 # Screen Sketch
 ![first pass doodle for the game screens](https://github.com/ludovino/TicTacToe/blob/master/UI-sketch.png?raw=true)
