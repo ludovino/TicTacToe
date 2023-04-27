@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void OnPlay()
+    private void OnPlay(PlayerInfo _)
     {
         var result = _boardEvaluator.Evaluate(_board.State);
         _activePlayerController.SetActive(false);

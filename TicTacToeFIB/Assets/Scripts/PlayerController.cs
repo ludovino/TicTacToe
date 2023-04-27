@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!enabled) return;
         var played = _board.Play(index, _playerInfo);
-        Debug.Log($"played: {index} success: {played}");
     }
 
     private void OnBoardChange()

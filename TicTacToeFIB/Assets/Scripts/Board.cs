@@ -20,12 +20,16 @@ public class Board : MonoBehaviour
     public IReadOnlyList<int> State => Array.AsReadOnly(_board);
 
     [SerializeField]
-    private UnityEvent _onPlay;
-    public UnityEvent OnPlay => _onPlay;
+    private OnPlay _onPlay;
+    public OnPlay OnPlay => _onPlay;
+    [SerializeField]
+    private OnPlay _onPlayFail;
+    public OnPlay OnPlayFail => _onPlayFail;
 
     private void Awake()
     {
-        _onPlay ??= new UnityEvent();
+        _onPlay ??= new OnPlay();
+        _onPlayFail ??= new OnPlay();
     }
 
     [Button("Clear")]
@@ -40,12 +44,16 @@ public class Board : MonoBehaviour
 
     public bool Playable(int index)
     {
-        return _board[index] == 0;
+        return this.enabled && _board[index] == 0;
     }
 
     public bool Play(int index, PlayerInfo player)
     {
-        if (!Playable(index)) return false;
+        if (!Playable(index))
+        {
+            _onPlayFail.Invoke(player);
+            return false;
+        }
         _board[index] = player.Id;
 
         var toMark = _markImages[index];
@@ -54,8 +62,10 @@ public class Board : MonoBehaviour
         toMark.sprite = player.Mark;
         toMark.color = player.Color;
 
-        _onPlay.Invoke();
+        _onPlay.Invoke(player);
 
         return true;
     }
 }
+[Serializable]
+public class OnPlay : UnityEvent<PlayerInfo> { }
