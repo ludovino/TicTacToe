@@ -15,7 +15,8 @@ public class SurvivalGameManager : MonoBehaviour
     private BoardEvaluator _boardEvaluator;
     [SerializeField]
     private float cooldown;
-
+    [SerializeField]
+    private float minCooldown;
     [SerializeField]
     private float speedIncreasePercent;
     
@@ -25,12 +26,18 @@ public class SurvivalGameManager : MonoBehaviour
 
     [SerializeField]
     private float transitionTime;
+    [SerializeField]
+    private ResultLine _resultLine;
+
+    [SerializeField]
+    private SurvivalResult _survivalResult;
 
     [Serializable]
     public class Player
     {
         public PlayerInfo Info;
         public GameObject playerController;
+        public SurvivalUI ui;
         public float cooldown;
         public void UpdateCooldown()
         {
@@ -48,8 +55,8 @@ public class SurvivalGameManager : MonoBehaviour
     private int _lives;
     public int Lives => _lives;
 
-    [SerializeField]
     private int _score;
+    private int _rounds;
     public int score => _score;
 
     [SerializeField]
@@ -81,7 +88,9 @@ public class SurvivalGameManager : MonoBehaviour
     {
         if (!timeOn) return;
         _humanPlayer.UpdateCooldown();
+        _humanPlayer.ui.UpdateCooldown(Mathf.Clamp(_humanPlayer.cooldown / cooldown, 0f, 1f));
         _cpuPlayer.UpdateCooldown();
+        _cpuPlayer.ui.UpdateCooldown(Mathf.Clamp(_cpuPlayer.cooldown / (cooldown * (1f + playerAdvantage)), 0f, 1f));
     }
 
     private void OnPlay(PlayerInfo playerInfo)
@@ -90,9 +99,14 @@ public class SurvivalGameManager : MonoBehaviour
         var result = _boardEvaluator.Evaluate(_board.State);
         Cooldown(player);
         if (!result.GameFinished) return;
-        else if (result.IsDraw) Draw();
+        else if (result.IsDraw)
+        {
+            Draw();
+            return;
+        }
         else if (result.WinnerId == _cpuPlayer.Info.Id) Lose();
         else Win(result);
+        _resultLine.DrawLine(result.Line);
     }
 
     private void OnFail(PlayerInfo playerInfo)
@@ -111,7 +125,9 @@ public class SurvivalGameManager : MonoBehaviour
 
     private void Win(EvaluationResult result)
     {
+        _rounds++;
         _score++;
+        _humanPlayer.ui.UpdateScore(_score);
         SpeedUp();
         ResetBoard();
     }
@@ -120,17 +136,20 @@ public class SurvivalGameManager : MonoBehaviour
     {
         var speedFactor = speedIncreasePercent / 100f;
         cooldown = cooldown * (1 - speedFactor);
+        cooldown = Mathf.Max(cooldown, minCooldown);
     }
 
     private void Lose()
     {
+        _rounds++;
         _lives--;
-        if(_lives == 0)
+        if (_lives == 0)
         {
             timeOn = false;
-            // results screen
+            _survivalResult.Show(_score, _rounds);
             return;
         }
+        _humanPlayer.ui.UpdateLives(_lives);
         ResetBoard();
     }
     private void ResetBoard()
@@ -145,6 +164,7 @@ public class SurvivalGameManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
         yield return _board.gameObject.transform.DOMove(pos + new Vector3(0, 10f, 0), transitionTime).WaitForCompletion();
         _board.Clear();
+        _resultLine.HideLine();
         _board.gameObject.transform.position = pos - new Vector3(0, 10f, 0);
         yield return _board.gameObject.transform.DOMove(pos, transitionTime).WaitForCompletion();
         _board.enabled = true;
@@ -153,6 +173,7 @@ public class SurvivalGameManager : MonoBehaviour
 
     private void Draw()
     {
+        _rounds++;
         SpeedUp();
         ResetBoard();
     }

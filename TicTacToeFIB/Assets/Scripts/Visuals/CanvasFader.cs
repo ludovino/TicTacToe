@@ -26,7 +26,7 @@ public class CanvasFader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _canvasGroup.alpha = this.isActiveAndEnabled ? _high : _low;
+        //_canvasGroup.alpha = this.isActiveAndEnabled ? _high : _low;
     }
 
     // Update is called once per frame

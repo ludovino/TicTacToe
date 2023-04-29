@@ -47,7 +47,12 @@ public class CpuPlayer : MonoBehaviour
                 board[i] = 0;
             }
         }
-        var bestMoves = moves.GroupBy(m => m.Score).OrderByDescending(g => g.Key).First().ToList();
+        var bestMoves = moves.GroupBy(m => m.Score).OrderByDescending(g => g.Key).FirstOrDefault()?.ToList();
+        if (bestMoves == null || !bestMoves.Any())
+        {
+            _board.Play(0, _cpuPlayer);
+            return;
+        }
         var chosenmove = bestMoves[Random.Range(0, bestMoves.Count)];
         _board.Play(chosenmove.Index, _cpuPlayer);
     }
