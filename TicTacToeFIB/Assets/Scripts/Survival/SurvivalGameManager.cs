@@ -154,6 +154,8 @@ public class SurvivalGameManager : MonoBehaviour
     }
     private void ResetBoard()
     {
+        if (_humanPlayer.cooldown == 0) _humanPlayer.cooldown = 0.1f;
+        if (_cpuPlayer.cooldown == 0) _cpuPlayer.cooldown = 0.1f;
         StartCoroutine(ResetBoardCR());
     }
     private IEnumerator ResetBoardCR()
