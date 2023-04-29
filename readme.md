@@ -25,8 +25,8 @@ TODO List:
 - [X] cpu player (min max alogrithm?)
 - [X] restart (alternating)
 - [X] title screen
-- [ ] plan alternate game mode
-- [ ] build alternate game mode
+- [X] plan alternate game mode
+- [X] build alternate game mode
 
 # Screen Sketch
 ![first pass doodle for the game screens](https://github.com/ludovino/TicTacToe/blob/master/UI-sketch.png?raw=true)
@@ -50,3 +50,10 @@ TODO List:
 - hold play state
 - prevent invalid moves
 - raise event on play to change turn or win / lose / draw
+
+# Alternate Game Mode
+## Survival Mode
+
+- The player has 5 lives, and each time they lose a game of tic tac toe they lose a life.
+- Rather than taking turns to place marks, your ability to place a mark is on a cooldown. If you're quick, you might be able to place two marks in the time the computer takes to place one!
+- the game gradually accelerates, increasing the difficulty as the player has to act and also think faster.
