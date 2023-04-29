@@ -1,5 +1,5 @@
 # Noughts and Crosses
-## Fish in a Bottle Brief
+## Brief
 
 #### Part 1
 - Single player mode
