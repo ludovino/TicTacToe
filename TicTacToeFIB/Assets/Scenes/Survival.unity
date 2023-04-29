@@ -2988,6 +2988,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6825620263527995581, guid: 6edd76e276b695240b94a3dc2a9fbc33, type: 3}
+      propertyPath: _survival
+      value: MainMenu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6edd76e276b695240b94a3dc2a9fbc33, type: 3}
 --- !u!114 &7595264581390615760

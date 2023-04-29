@@ -47,3 +47,4 @@ MonoBehaviour:
   _mainMenu: MainMenu
   _twoPlayer: TwoPlayerScene
   _vsComputer: VsComputer
+  _survival: Survival

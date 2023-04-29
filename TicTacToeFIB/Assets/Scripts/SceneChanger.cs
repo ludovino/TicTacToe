@@ -17,6 +17,9 @@ public class SceneChanger : MonoBehaviour
     [SerializeField]
     [Scene]
     private string _vsComputer;
+    [SerializeField]
+    [Scene]
+    private string _survival;
 
     private void ChangeScene(string sceneName)
     {
@@ -36,5 +39,10 @@ public class SceneChanger : MonoBehaviour
     public void VsComputer()
     {
         ChangeScene(_vsComputer);
+    }
+
+    public void Survival()
+    {
+        ChangeScene(_survival);
     }
 }
